@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Create your BraddyX account."
+    >
+
+    <title>Register — BraddyX</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Authentication CSS -->
+    <link rel="stylesheet" href="css/auth.css">
+
+</head>
+
+
+<body>
+
+    <main class="auth-page">
+
+
+        <!-- ================= LEFT SIDE ================= -->
+
+        <section class="auth-brand">
+
+            <a href="index.html" class="brand-logo">
+
+                <div class="logo-icon">
+                    B
+                </div>
+
+                <div class="logo-text">
+
+                    <strong>
+                        BraddyX
+                    </strong>
+
+                    <small>
+                        BRAIN & BUDDY
+                    </small>
+
+                </div>
+
+            </a>
+
+
+            <div class="brand-content">
+
+                <span class="brand-label">
+                    YOUR JOURNEY STARTS HERE
+                </span>
+
+                <h1>
+                    Build your path.
+                    <span>We'll help you walk it.</span>
+                </h1>
+
+                <p>
+                    Create your BraddyX account and bring your
+                    academics, skills, DSA, projects and placement
+                    preparation together.
+                </p>
+
+
+                <div class="brand-points">
+
+                    <div class="brand-point">
+                        <span>✓</span>
+                        Personalized student dashboard
+                    </div>
+
+                    <div class="brand-point">
+                        <span>✓</span>
+                        Track your academic progress
+                    </div>
+
+                    <div class="brand-point">
+                        <span>✓</span>
+                        Build your placement roadmap
+                    </div>
+
+                    <div class="brand-point">
+                        <span>✓</span>
+                        Your own BraddyX Buddy
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="brand-footer">
+                © 2026 BraddyX — Brain and Buddy
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= REGISTER FORM ================= -->
+
+        <section class="auth-form-section">
+
+            <div class="auth-form-container">
+
+
+                <div class="mobile-logo">
+
+                    <a href="index.html" class="brand-logo">
+
+                        <div class="logo-icon">
+                            B
+                        </div>
+
+                        <div class="logo-text">
+
+                            <strong>
+                                BraddyX
+                            </strong>
+
+                            <small>
+                                BRAIN & BUDDY
+                            </small>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <div class="form-heading">
+
+                    <span class="form-label">
+                        GET STARTED
+                    </span>
+
+                    <h2>
+                        Create your account
+                    </h2>
+
+                    <p>
+                        Start building your personalized journey.
+                    </p>
+
+                </div>
+
+
+                <form id="registerForm">
+
+
+                    <!-- Full Name -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- Email -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- Password -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Create a password"
+                                autocomplete="new-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="passwordToggle"
+                            >
+                                Show
+                            </button>
+
+                        </div>
+
+                        <small class="input-hint">
+                            Use at least 8 characters.
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- Confirm Password -->
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Re-enter your password"
+                                autocomplete="new-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="confirmPasswordToggle"
+                            >
+                                Show
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Terms -->
+
+                    <div class="terms">
+
+                        <input
+                            type="checkbox"
+                            id="terms"
+                            required
+                        >
+
+                        <label for="terms">
+
+                            I agree to the
+                            <a href="#">
+                                Terms of Service
+                            </a>
+                            and
+                            <a href="#">
+                                Privacy Policy
+                            </a>.
+
+                        </label>
+
+                    </div>
+
+
+
+                    <!-- Error -->
+
+                    <div
+                        id="formError"
+                        class="form-message error"
+                    ></div>
+
+
+
+                    <!-- Success -->
+
+                    <div
+                        id="formSuccess"
+                        class="form-message success"
+                    ></div>
+
+
+
+                    <!-- Submit -->
+
+                    <button
+                        type="submit"
+                        class="auth-submit"
+                    >
+                        Create Account →
+                    </button>
+
+
+                </form>
+
+
+                <div class="form-divider">
+                    <span>Already have an account?</span>
+                </div>
+
+
+                <a
+                    href="login.html"
+                    class="login-link"
+                >
+                    Login to BraddyX
+                </a>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- JavaScript -->
+
+    <script src="js/auth.js"></script>
+
+</body>
+
+</html>

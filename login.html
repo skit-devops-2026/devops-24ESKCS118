@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Login to your BraddyX account."
+    >
+
+    <title>Login — BraddyX</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="css/auth.css">
+
+</head>
+
+
+<body>
+
+    <main class="auth-page">
+
+
+        <!-- ================= LEFT SIDE ================= -->
+
+        <section class="auth-brand">
+
+            <a href="index.html" class="brand-logo">
+
+                <div class="logo-icon">
+                    B
+                </div>
+
+                <div class="logo-text">
+
+                    <strong>
+                        BraddyX
+                    </strong>
+
+                    <small>
+                        BRAIN & BUDDY
+                    </small>
+
+                </div>
+
+            </a>
+
+
+            <div class="brand-content">
+
+                <span class="brand-label">
+                    WELCOME BACK
+                </span>
+
+                <h1>
+                    Your journey
+                    <span>continues here.</span>
+                </h1>
+
+                <p>
+                    Pick up where you left off. Check your
+                    progress, complete today's tasks and keep
+                    moving toward your goals.
+                </p>
+
+
+                <div class="brand-points">
+
+                    <div class="brand-point">
+                        <span>✓</span>
+                        Check today's priorities
+                    </div>
+
+                    <div class="brand-point">
+                        <span>✓</span>
+                        Track your progress
+                    </div>
+
+                    <div class="brand-point">
+                        <span>✓</span>
+                        Continue your roadmap
+                    </div>
+
+                    <div class="brand-point">
+                        <span>✓</span>
+                        Talk to your BraddyX Buddy
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="brand-footer">
+                © 2026 BraddyX — Brain and Buddy
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= LOGIN FORM ================= -->
+
+        <section class="auth-form-section">
+
+            <div class="auth-form-container">
+
+
+                <!-- Mobile Logo -->
+
+                <div class="mobile-logo">
+
+                    <a href="index.html" class="brand-logo">
+
+                        <div class="logo-icon">
+                            B
+                        </div>
+
+                        <div class="logo-text">
+
+                            <strong>
+                                BraddyX
+                            </strong>
+
+                            <small>
+                                BRAIN & BUDDY
+                            </small>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <!-- Heading -->
+
+                <div class="form-heading">
+
+                    <span class="form-label">
+                        WELCOME BACK
+                    </span>
+
+                    <h2>
+                        Login to BraddyX
+                    </h2>
+
+                    <p>
+                        Continue your personalized journey.
+                    </p>
+
+                </div>
+
+
+                <!-- Form -->
+
+                <form id="loginForm">
+
+
+                    <!-- Email -->
+
+                    <div class="form-group">
+
+                        <label for="loginEmail">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            name="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Password -->
+
+                    <div class="form-group">
+
+                        <div class="password-label-row">
+
+                            <label for="loginPassword">
+                                Password
+                            </label>
+
+                            <a
+                                href="#"
+                                class="forgot-password"
+                            >
+                                Forgot password?
+                            </a>
+
+                        </div>
+
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="loginPassword"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="loginPasswordToggle"
+                            >
+                                Show
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Remember -->
+
+                    <div class="remember-me">
+
+                        <input
+                            type="checkbox"
+                            id="rememberMe"
+                        >
+
+                        <label for="rememberMe">
+                            Remember me
+                        </label>
+
+                    </div>
+
+
+                    <!-- Error -->
+
+                    <div
+                        id="loginError"
+                        class="form-message error"
+                    ></div>
+
+
+                    <!-- Success -->
+
+                    <div
+                        id="loginSuccess"
+                        class="form-message success"
+                    ></div>
+
+
+                    <!-- Submit -->
+
+                    <button
+                        type="submit"
+                        class="auth-submit"
+                    >
+                        Login →
+                    </button>
+
+                </form>
+
+
+                <!-- Register -->
+
+                <div class="form-divider">
+                    <span>New to BraddyX?</span>
+                </div>
+
+
+                <a
+                    href="register.html"
+                    class="login-link"
+                >
+                    Create an Account
+                </a>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/auth.js"></script>
+
+</body>
+
+</html>
