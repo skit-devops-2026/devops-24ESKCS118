@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Attendance | BraddyX</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/attendance.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <a href="dashboard.html" class="brand">
+            <div class="brand-icon">B</div>
+
+            <div>
+                <strong>BraddyX</strong>
+                <small>BRAIN & BUDDY</small>
+            </div>
+        </a>
+
+        <nav>
+
+            <p class="nav-title">MAIN</p>
+
+            <a href="dashboard.html" class="nav-item">
+                <span>⌂</span> Dashboard
+            </a>
+
+            <a href="profile.html" class="nav-item">
+                <span>◯</span> My Profile
+            </a>
+
+            <p class="nav-title">TRACK</p>
+
+            <a href="attendance.html" class="nav-item active">
+                <span>▣</span> Attendance
+            </a>
+
+            <a href="dsa.html" class="nav-item">
+                <span>⌘</span> DSA Progress
+            </a>
+
+            <a href="skills.html" class="nav-item">
+                <span>✦</span> Skills
+            </a>
+
+            <a href="projects.html" class="nav-item">
+                <span>▤</span> Projects
+            </a>
+
+            <p class="nav-title">PLACEMENT</p>
+
+            <a href="placement.html" class="nav-item">
+                <span>◎</span> Placement
+            </a>
+
+            <a href="roadmap.html" class="nav-item">
+                <span>↗</span> My Roadmap
+            </a>
+
+            <a href="analytics.html" class="nav-item">
+                <span>▥</span> Analytics
+            </a>
+
+            <a href="resume.html" class="nav-item">
+                <span>▤</span> Resume
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="buddy.html" class="buddy-card">
+                <div class="buddy-icon">✦</div>
+
+                <div>
+                    <strong>BraddyX Buddy</strong>
+                    <small>Need guidance?</small>
+                </div>
+
+                <span>→</span>
+            </a>
+
+            <a href="../login.html" class="logout">
+                ↪ &nbsp; Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+                <p>ACADEMIC TRACKING</p>
+                <h1>Attendance</h1>
+            </div>
+
+            <div class="top-actions">
+
+                <button id="themeToggle" class="icon-btn">☀</button>
+
+                <button class="icon-btn">♧</button>
+
+                <div class="avatar">S</div>
+
+            </div>
+
+        </header>
+
+
+        <section class="content">
+
+
+            <!-- ERP INPUT -->
+
+            <section class="erp-card">
+
+                <div class="section-heading">
+
+                    <div>
+                        <span>01 · IMPORT</span>
+
+                        <h2>Paste your ERP attendance</h2>
+
+                        <p>
+                            Copy your attendance report from ERP and paste it below.
+                            BraddyX will calculate everything automatically.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <textarea
+                    id="erpInput"
+                    placeholder="Paste your ERP attendance report here...
+
+Example:
+CRT        18/30
+DAA        14/18
+ML         11/18
+CNS        13/18
+FSD         8/12
+DevOps     12/17
+DAA Lab    10/12
+ML Lab      8/12"></textarea>
+
+
+                <div class="input-bottom">
+
+                    <small>
+                        No manual calculation required.
+                    </small>
+
+                    <button id="analyzeBtn" class="primary-btn">
+                        Analyze Attendance →
+                    </button>
+
+                </div>
+
+                <p id="inputError" class="error"></p>
+
+            </section>
+
+
+
+            <!-- RESULTS -->
+
+            <section id="results" class="hidden">
+
+
+                <!-- SUMMARY -->
+
+                <div class="summary-grid">
+
+                    <div class="summary-card highlight">
+
+                        <span>OVERALL</span>
+
+                        <strong id="overallPercent">
+                            0%
+                        </strong>
+
+                        <small>
+                            Overall attendance
+                        </small>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <span>PRESENT</span>
+
+                        <strong id="totalPresent">
+                            0
+                        </strong>
+
+                        <small>
+                            Classes attended
+                        </small>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <span>ABSENT</span>
+
+                        <strong id="totalAbsent">
+                            0
+                        </strong>
+
+                        <small>
+                            Classes missed
+                        </small>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <span>SUBJECTS AT RISK</span>
+
+                        <strong id="riskSubjects">
+                            0
+                        </strong>
+
+                        <small>
+                            Below 75%
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ANALYSIS -->
+
+                <div class="analysis-box">
+
+                    <div class="analysis-icon">
+                        ✦
+                    </div>
+
+                    <div>
+
+                        <span>BRADDYX ANALYSIS</span>
+
+                        <h3 id="analysisTitle">
+                            Attendance analysis
+                        </h3>
+
+                        <p id="analysisText">
+                            Your analysis will appear here.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SUBJECT TABLE -->
+
+                <section class="white-card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <span>02 · BREAKDOWN</span>
+
+                            <h2>Subject-wise Attendance</h2>
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-container">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>SUBJECT</th>
+                                    <th>PRESENT</th>
+                                    <th>ABSENT</th>
+                                    <th>TOTAL</th>
+                                    <th>ATTENDANCE</th>
+                                    <th>STATUS</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="attendanceTable"></tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+
+
+                <section class="planner-section">
+
+    <div class="section-heading">
+        <span class="section-label">SMART PLANNER</span>
+        <h2>Plan Your Attendance</h2>
+        <p>
+            Enter your expected classes together and BraddyX will calculate
+            the combined result.
+        </p>
+    </div>
+
+    <div class="planner-card">
+
+        <div class="planner-inputs">
+
+            <!-- ATTEND -->
+            <div class="planner-input">
+
+                <label for="planAttend">
+                    🟢 Classes I will attend
+                </label>
+
+                <input
+                    type="number"
+                    id="planAttend"
+                    min="0"
+                    value="0"
+                    placeholder="e.g. 10"
+                >
+
+            </div>
+
+
+            <!-- LEAVE -->
+            <div class="planner-input">
+
+                <label for="planLeave">
+                    🔴 Classes I will leave
+                </label>
+
+                <input
+                    type="number"
+                    id="planLeave"
+                    min="0"
+                    value="0"
+                    placeholder="e.g. 2"
+                >
+
+            </div>
+
+
+            <!-- MAKEUP -->
+            <div class="planner-input">
+
+                <label for="planMakeup">
+                    🟡 Classes I will makeup
+                </label>
+
+                <input
+                    type="number"
+                    id="planMakeup"
+                    min="0"
+                    value="0"
+                    placeholder="e.g. 2"
+                >
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="calculatePlanBtn"
+            class="primary-btn"
+        >
+            Analyze My Plan →
+        </button>
+
+
+        <!-- PLAN RESULT -->
+
+        <div
+            id="planResult"
+            class="plan-result hidden"
+        >
+
+            <div class="plan-result-header">
+
+                <span>PROJECTED ATTENDANCE</span>
+
+                <strong id="projectedPercent">
+                    0%
+                </strong>
+
+                <div
+                    id="planStatus"
+                    class="plan-status"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="plan-stats">
+
+                <div class="plan-stat">
+
+                    <span>Present</span>
+
+                    <strong id="projectedPresent">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="plan-stat">
+
+                    <span>Absent</span>
+
+                    <strong id="projectedAbsent">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="plan-stat">
+
+                    <span>Total</span>
+
+                    <strong id="projectedTotal">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="plan-stat">
+
+                    <span>Makeup</span>
+
+                    <strong id="projectedMakeup">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="planMessage"
+                class="plan-message"
+            ></div>
+
+
+            <!-- BEST PLAN -->
+
+            <div
+                id="bestPlan"
+                class="best-plan"
+            >
+
+                <h3>BraddyX Recommendation</h3>
+
+                <p id="bestPlanText"></p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="subject-planner">
+
+    <div class="section-heading">
+        <span class="section-label">SUBJECT PLANNER</span>
+        <h2>Plan Subject-Wise</h2>
+        <p>See exactly how your attendance changes for a particular subject.</p>
+    </div>
+
+    <div class="subject-planner-card">
+
+        <label for="subjectSelect">Select Subject</label>
+
+        <select id="subjectSelect">
+            <option value="">Select a subject</option>
+        </select>
+
+
+        <div id="subjectCurrent" class="subject-current hidden">
+
+            <div>
+                <span>Current Attendance</span>
+                <strong id="subjectCurrentPercent">0%</strong>
+            </div>
+
+            <div>
+                <span>Present</span>
+                <strong id="subjectPresent">0</strong>
+            </div>
+
+            <div>
+                <span>Absent</span>
+                <strong id="subjectAbsent">0</strong>
+            </div>
+
+        </div>
+
+
+        <div class="subject-plan-inputs">
+
+            <div>
+                <label>Classes I'll Attend</label>
+                <input type="number" id="subjectAttend" min="0" value="0">
+            </div>
+
+            <div>
+                <label>Classes I'll Leave</label>
+                <input type="number" id="subjectLeave" min="0" value="0">
+            </div>
+
+            <div>
+                <label>Classes I'll Makeup</label>
+                <input type="number" id="subjectMakeup" min="0" value="0">
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="subjectPlanBtn"
+            class="primary-btn"
+        >
+            Analyze Subject Plan →
+        </button>
+
+
+        <div id="subjectPlanResult" class="subject-plan-result hidden">
+
+            <div class="subject-projected">
+
+                <span>PROJECTED ATTENDANCE</span>
+
+                <strong id="subjectProjectedPercent">
+                    0%
+                </strong>
+
+                <div id="subjectStatus"></div>
+
+            </div>
+
+            <p id="subjectPlanMessage"></p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+                <!-- TARGET -->
+
+                <section class="white-card target-card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <span>04 · TARGET</span>
+                            <h2>75% Recovery Planner</h2>
+                        </div>
+
+                    </div>
+
+                    <div id="recoveryContainer"></div>
+
+                </section>
+
+            </section>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="../js/attendance.js"></script>
+
+</body>
+</html>

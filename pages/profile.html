@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile — BraddyX</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <a href="dashboard.html" class="brand">
+            <div class="brand-icon">B</div>
+
+            <div class="brand-name">
+                <strong>BraddyX</strong>
+                <span>BRAIN & BUDDY</span>
+            </div>
+        </a>
+
+
+        <nav class="navigation">
+
+            <p class="nav-title">MAIN</p>
+
+            <a href="dashboard.html" class="nav-item">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="profile.html" class="nav-item active">
+                <span>◯</span>
+                My Profile
+            </a>
+
+
+            <p class="nav-title">TRACK</p>
+
+            <a href="attendance.html" class="nav-item">
+                <span>▣</span>
+                Attendance
+            </a>
+
+            <a href="dsa.html" class="nav-item">
+                <span>⌘</span>
+                DSA Progress
+            </a>
+
+            <a href="skills.html" class="nav-item">
+                <span>✦</span>
+                Skills
+            </a>
+
+            <a href="projects.html" class="nav-item">
+                <span>▤</span>
+                Projects
+            </a>
+
+
+            <p class="nav-title">PLACEMENT</p>
+
+            <a href="placement.html" class="nav-item">
+                <span>◎</span>
+                Placement
+            </a>
+
+            <a href="roadmap.html" class="nav-item">
+                <span>↗</span>
+                My Roadmap
+            </a>
+
+            <a href="analytics.html" class="nav-item">
+                <span>▥</span>
+                Analytics
+            </a>
+
+            <a href="resume.html" class="nav-item">
+                <span>▤</span>
+                Resume
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="buddy.html" class="buddy-card">
+
+                <div class="buddy-icon">✦</div>
+
+                <div>
+                    <strong>BraddyX Buddy</strong>
+                    <small>Need some guidance?</small>
+                </div>
+
+                <span>→</span>
+
+            </a>
+
+            <a href="../login.html" class="logout">
+                <span>↪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <p class="page-label">ACCOUNT</p>
+
+                <h1>My Profile</h1>
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <button class="icon-button" id="themeToggle">
+                    ☀
+                </button>
+
+                <button class="icon-button notification">
+                    ♧
+                    <span></span>
+                </button>
+
+                <div class="profile-avatar">
+                    S
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= PROFILE CONTENT ================= -->
+
+        <section class="profile-content">
+
+
+            <!-- PROFILE HEADER -->
+
+            <div class="profile-header-card">
+
+                <div class="large-avatar">
+                    S
+                </div>
+
+                <div class="profile-header-info">
+
+                    <span>STUDENT PROFILE</span>
+
+                    <h2 id="displayName">
+                        Student
+                    </h2>
+
+                    <p>
+                        Keep your information updated so BraddyX
+                        can personalize your placement journey.
+                    </p>
+
+                </div>
+
+                <div class="profile-status">
+                    ● Profile active
+                </div>
+
+            </div>
+
+
+
+            <!-- FORM -->
+
+            <form id="profileForm">
+
+
+                <!-- PERSONAL INFORMATION -->
+
+                <section class="profile-card">
+
+                    <div class="card-heading">
+
+                        <div>
+                            <span>01</span>
+
+                            <h3>Personal Information</h3>
+
+                            <p>
+                                Basic information about you.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label for="fullName">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="fullName"
+                                placeholder="Enter your full name"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="email">
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="Enter your email"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="college">
+                                College / University
+                            </label>
+
+                            <input
+                                type="text"
+                                id="college"
+                                placeholder="Enter your college"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="branch">
+                                Branch
+                            </label>
+
+                            <select id="branch">
+
+                                <option value="">
+                                    Select branch
+                                </option>
+
+                                <option>
+                                    Computer Science & Engineering
+                                </option>
+
+                                <option>
+                                    Information Technology
+                                </option>
+
+                                <option>
+                                    Artificial Intelligence
+                                </option>
+
+                                <option>
+                                    Electronics & Communication
+                                </option>
+
+                                <option>
+                                    Electrical Engineering
+                                </option>
+
+                                <option>
+                                    Mechanical Engineering
+                                </option>
+
+                                <option>
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="graduation">
+                                Graduation Year
+                            </label>
+
+                            <select id="graduation">
+
+                                <option value="">
+                                    Select year
+                                </option>
+
+                                <option>2026</option>
+                                <option>2027</option>
+                                <option>2028</option>
+                                <option>2029</option>
+                                <option>2030</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="semester">
+                                Current Semester
+                            </label>
+
+                            <select id="semester">
+
+                                <option value="">
+                                    Select semester
+                                </option>
+
+                                <option>1st Semester</option>
+                                <option>2nd Semester</option>
+                                <option>3rd Semester</option>
+                                <option>4th Semester</option>
+                                <option>5th Semester</option>
+                                <option>6th Semester</option>
+                                <option>7th Semester</option>
+                                <option>8th Semester</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- CAREER INFORMATION -->
+
+                <section class="profile-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <span>02</span>
+
+                            <h3>Career Goals</h3>
+
+                            <p>
+                                Tell BraddyX where you want to go.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label for="targetRole">
+                                Target Role
+                            </label>
+
+                            <select id="targetRole">
+
+                                <option value="">
+                                    Select your target role
+                                </option>
+
+                                <option>Software Developer</option>
+                                <option>Frontend Developer</option>
+                                <option>Backend Developer</option>
+                                <option>Full Stack Developer</option>
+                                <option>Data Analyst</option>
+                                <option>Data Scientist</option>
+                                <option>Machine Learning Engineer</option>
+                                <option>DevOps Engineer</option>
+                                <option>Cybersecurity Engineer</option>
+                                <option>Not sure yet</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="experience">
+                                Current Level
+                            </label>
+
+                            <select id="experience">
+
+                                <option value="">
+                                    Select your level
+                                </option>
+
+                                <option>Beginner</option>
+                                <option>Intermediate</option>
+                                <option>Advanced</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group full-width">
+
+                            <label for="placementDate">
+                                Placement Preparation Timeline
+                            </label>
+
+                            <select id="placementDate">
+
+                                <option value="">
+                                    Select timeline
+                                </option>
+
+                                <option>
+                                    More than 1 year
+                                </option>
+
+                                <option>
+                                    6–12 months
+                                </option>
+
+                                <option>
+                                    3–6 months
+                                </option>
+
+                                <option>
+                                    Less than 3 months
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- LINKS -->
+
+                <section class="profile-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <span>03</span>
+
+                            <h3>Developer Profiles</h3>
+
+                            <p>
+                                Connect your coding and professional profiles.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label for="github">
+                                GitHub
+                            </label>
+
+                            <input
+                                type="url"
+                                id="github"
+                                placeholder="https://github.com/username"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="linkedin">
+                                LinkedIn
+                            </label>
+
+                            <input
+                                type="url"
+                                id="linkedin"
+                                placeholder="https://linkedin.com/in/username"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="leetcode">
+                                LeetCode
+                            </label>
+
+                            <input
+                                type="url"
+                                id="leetcode"
+                                placeholder="https://leetcode.com/u/username"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="codingProfile">
+                                Other Coding Profile
+                            </label>
+
+                            <input
+                                type="url"
+                                id="codingProfile"
+                                placeholder="Optional"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- SAVE -->
+
+                <div class="save-section">
+
+                    <p id="saveMessage"></p>
+
+                    <button
+                        type="submit"
+                        class="save-button"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="../js/profile.js"></script>
+
+</body>
+
+</html>

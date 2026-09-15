@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>BraddyX — Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/dashboard.css"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- =========================================
+         SIDEBAR
+    ========================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                B
+            </div>
+
+            <div>
+                <h2>BraddyX</h2>
+                <span>Brain & Buddy</span>
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a
+                href="dashboard.html"
+                class="nav-item active"
+            >
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="attendance.html"
+                class="nav-item"
+            >
+                <span>◉</span>
+                Attendance
+            </a>
+
+
+            <a
+                href="#roadmap"
+                class="nav-item"
+            >
+                <span>◆</span>
+                Placement Roadmap
+            </a>
+
+
+            <a
+                href="#progress"
+                class="nav-item"
+            >
+                <span>↗</span>
+                Progress
+            </a>
+
+
+            <a
+                href="#ai"
+                class="nav-item"
+            >
+                <span>✦</span>
+                AI Buddy
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a
+                href="#profile"
+                class="nav-item"
+            >
+                <span>●</span>
+                Profile
+            </a>
+
+
+            <a
+                href="#settings"
+                class="nav-item"
+            >
+                <span>⚙</span>
+                Settings
+            </a>
+
+
+            <button
+                id="logoutBtn"
+                class="logout-btn"
+            >
+                <span>↪</span>
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div class="mobile-brand">
+                BraddyX
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <button
+                    id="themeToggle"
+                    class="icon-btn"
+                    title="Toggle theme"
+                >
+                    ☀
+                </button>
+
+
+                <button
+                    class="notification-btn"
+                    title="Notifications"
+                >
+                    ♢
+                    <span></span>
+                </button>
+
+
+                <div class="user-mini">
+
+                    <div class="avatar">
+                        D
+                    </div>
+
+                    <div>
+
+                        <strong id="userName">
+                            Divyanshi
+                        </strong>
+
+                        <small>
+                            Student
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================================
+             WELCOME
+        ========================================== -->
+
+        <section class="welcome">
+
+            <div>
+
+                <span class="eyebrow">
+                    YOUR PERSONAL DASHBOARD
+                </span>
+
+                <h1>
+                    Good morning,
+                    <span id="welcomeName">
+                        Divyanshi
+                    </span>
+                    👋
+                </h1>
+
+                <p>
+                    Here's your academic and placement
+                    progress at a glance.
+                </p>
+
+            </div>
+
+
+            <div class="date-box">
+
+                <span id="currentDate">
+                    Today
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             STAT CARDS
+        ========================================== -->
+
+        <section class="stats-grid">
+
+
+            <div class="stat-card attendance-card">
+
+                <div class="stat-top">
+
+                    <span>ATTENDANCE</span>
+
+                    <span class="stat-icon">
+                        ◉
+                    </span>
+
+                </div>
+
+
+                <strong id="attendanceValue">
+                    74.15%
+                </strong>
+
+
+                <div class="progress-bar">
+
+                    <div
+                        id="attendanceBar"
+                        style="width: 74.15%"
+                    ></div>
+
+                </div>
+
+
+                <p>
+                    Overall attendance
+                </p>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span>PLACEMENT PROGRESS</span>
+
+                    <span class="stat-icon">
+                        ◆
+                    </span>
+
+                </div>
+
+
+                <strong id="placementValue">
+                    0%
+                </strong>
+
+
+                <div class="progress-bar">
+
+                    <div
+                        id="placementBar"
+                        style="width: 0%"
+                    ></div>
+
+                </div>
+
+
+                <p>
+                    Roadmap completion
+                </p>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span>TASKS COMPLETED</span>
+
+                    <span class="stat-icon">
+                        ✓
+                    </span>
+
+                </div>
+
+
+                <strong id="tasksValue">
+                    0
+                </strong>
+
+
+                <p>
+                    This week
+                </p>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <span>SKILL SCORE</span>
+
+                    <span class="stat-icon">
+                        ↗
+                    </span>
+
+                </div>
+
+
+                <strong id="skillValue">
+                    0
+                </strong>
+
+
+                <p>
+                    Out of 100
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================================
+             TWO COLUMN AREA
+        ========================================== -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- PLACEMENT -->
+
+            <div
+                class="dashboard-card roadmap-card"
+                id="roadmap"
+            >
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <span class="card-label">
+                            PLACEMENT
+                        </span>
+
+                        <h2>
+                            Your Roadmap
+                        </h2>
+
+                    </div>
+
+
+                    <button
+                        class="text-btn"
+                        id="roadmapBtn"
+                    >
+                        View roadmap →
+                    </button>
+
+                </div>
+
+
+                <div class="roadmap-progress">
+
+                    <div class="roadmap-circle">
+
+                        <span id="roadmapPercent">
+                            0%
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Build your placement profile
+                        </h3>
+
+                        <p>
+                            Complete your skills,
+                            DSA and project milestones.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="skill-list">
+
+                    <div class="skill-row">
+
+                        <span>
+                            DSA
+                        </span>
+
+                        <div class="small-progress">
+                            <div style="width: 0%"></div>
+                        </div>
+
+                        <b>0%</b>
+
+                    </div>
+
+
+                    <div class="skill-row">
+
+                        <span>
+                            Web Development
+                        </span>
+
+                        <div class="small-progress">
+                            <div style="width: 0%"></div>
+                        </div>
+
+                        <b>0%</b>
+
+                    </div>
+
+
+                    <div class="skill-row">
+
+                        <span>
+                            Core CS
+                        </span>
+
+                        <div class="small-progress">
+                            <div style="width: 0%"></div>
+                        </div>
+
+                        <b>0%</b>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- AI BUDDY -->
+
+            <div
+                class="dashboard-card ai-card"
+                id="ai"
+            >
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <span class="card-label">
+                            AI ASSISTANT
+                        </span>
+
+                        <h2>
+                            AI Buddy
+                        </h2>
+
+                    </div>
+
+                    <span class="ai-status">
+                        ● Online
+                    </span>
+
+                </div>
+
+
+                <div class="ai-message">
+
+                    <div class="ai-avatar">
+                        ✦
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Hey! I'm your Braddy.
+                        </strong>
+
+                        <p id="aiMessage">
+                            Add your goals and progress
+                            and I'll help you decide
+                            what to focus on next.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="ai-btn"
+                    id="openAiBtn"
+                >
+                    Talk to AI Buddy →
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================================
+             TODAY'S TASKS
+        ========================================== -->
+
+        <section
+            class="dashboard-card tasks-card"
+            id="progress"
+        >
+
+            <div class="card-heading">
+
+                <div>
+
+                    <span class="card-label">
+                        TODAY
+                    </span>
+
+                    <h2>
+                        Your Tasks
+                    </h2>
+
+                </div>
+
+
+                <span
+                    id="taskCount"
+                    class="task-count"
+                >
+                    0 / 3
+                </span>
+
+            </div>
+
+
+            <div
+                id="taskList"
+                class="task-list"
+            >
+
+                <label class="task-item">
+
+                    <input
+                        type="checkbox"
+                        class="task-checkbox"
+                    >
+
+                    <span>
+                        Solve 2 DSA questions
+                    </span>
+
+                </label>
+
+
+                <label class="task-item">
+
+                    <input
+                        type="checkbox"
+                        class="task-checkbox"
+                    >
+
+                    <span>
+                        Revise one Core CS topic
+                    </span>
+
+                </label>
+
+
+                <label class="task-item">
+
+                    <input
+                        type="checkbox"
+                        class="task-checkbox"
+                    >
+
+                    <span>
+                        Work on your project
+                    </span>
+
+                </label>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             QUICK ACTIONS
+        ========================================== -->
+
+        <section class="quick-section">
+
+            <span class="card-label">
+                QUICK ACTIONS
+            </span>
+
+
+            <div class="quick-actions">
+
+                <a
+                    href="attendance.html"
+                    class="quick-card"
+                >
+
+                    <span>◉</span>
+
+                    <div>
+
+                        <strong>
+                            Analyze Attendance
+                        </strong>
+
+                        <small>
+                            Paste your ERP report
+                        </small>
+
+                    </div>
+
+                </a>
+
+
+                <button
+                    class="quick-card"
+                    id="roadmapQuick"
+                >
+
+                    <span>◆</span>
+
+                    <div>
+
+                        <strong>
+                            Continue Roadmap
+                        </strong>
+
+                        <small>
+                            Pick up where you left off
+                        </small>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    class="quick-card"
+                    id="aiQuick"
+                >
+
+                    <span>✦</span>
+
+                    <div>
+
+                        <strong>
+                            Ask AI Buddy
+                        </strong>
+
+                        <small>
+                            Get personalized guidance
+                        </small>
+
+                    </div>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <script src="js/dashboard.js"></script>
+
+</body>
+
+</html>
