@@ -34,3 +34,4 @@ To be added soon
 
 `GET /health` returns the running commit SHA. See `Makefile` and the milestone
 sheet for why this is required.
+CI Poll SCM test
