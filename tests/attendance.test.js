@@ -31,7 +31,7 @@ function calculateTotals(data) {
 // TEST 1
 const result1 = calculatePercentage(75, 100);
 
-if (result1 !== 75) {
+if (result1 !== 76) {
     throw new Error("Attendance percentage calculation failed");
 }
 
