@@ -12,6 +12,8 @@
     box-sizing: border-box;
 }
 
+
+
 html {
     scroll-behavior: smooth;
 }
@@ -1447,5 +1449,434 @@ section {
 
     .stat strong {
         font-size: 20px;
+    }
+}
+/* =====================================================
+   BRADDYX — COMMON STYLE
+   Sidebar + common layout
+   ===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f7fc;
+    color: #22223b;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* =====================================================
+   SIDEBAR
+   ===================================================== */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 245px;
+    height: 100vh;
+
+    background: #ffffff;
+    border-right: 1px solid #e8e7f0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 25px 15px;
+
+    z-index: 1000;
+}
+
+
+/* ================= LOGO ================= */
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 0 12px;
+    margin-bottom: 35px;
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        135deg,
+        #5a4bc7,
+        #33277f
+    );
+
+    color: white;
+
+    font-size: 28px;
+    font-weight: 900;
+
+    font-family: Georgia, serif;
+
+    box-shadow: 0 7px 18px rgba(81, 70, 184, 0.2);
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-text span {
+    color: #24213d;
+
+    font-size: 20px;
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+}
+
+.logo-text small {
+    margin-top: 2px;
+
+    color: #7c769d;
+
+    font-size: 8px;
+    font-weight: 600;
+
+    letter-spacing: 1.2px;
+}
+
+
+/* =====================================================
+   SIDEBAR NAVIGATION
+   ===================================================== */
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 12px 13px;
+
+    border-radius: 10px;
+
+    color: #77758a;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.nav-item:hover {
+    background: #f3f1ff;
+    color: #5146b8;
+}
+
+.nav-item.active {
+    background: #eeebff;
+    color: #5146b8;
+
+    font-weight: 700;
+}
+
+.nav-icon {
+    width: 22px;
+
+    display: flex;
+    justify-content: center;
+
+    font-size: 16px;
+}
+
+
+/* =====================================================
+   SIDEBAR BOTTOM
+   ===================================================== */
+
+.sidebar-bottom {
+    margin-top: auto;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #eeeeF4;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.logout:hover {
+    color: #d9534f;
+    background: #fff0f0;
+}
+
+
+/* =====================================================
+   MAIN CONTENT
+   ===================================================== */
+
+.main-content {
+    margin-left: 245px;
+
+    min-height: 100vh;
+
+    padding: 30px 35px;
+}
+
+
+/* =====================================================
+   TOPBAR
+   ===================================================== */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 28px;
+}
+
+.page-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #5146b8;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+.topbar h1 {
+    color: #20203a;
+
+    font-size: 27px;
+
+    letter-spacing: -0.5px;
+}
+
+.topbar p {
+    margin-top: 5px;
+
+    color: #85859a;
+
+    font-size: 11px;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+}
+
+
+/* =====================================================
+   THEME BUTTON
+   ===================================================== */
+
+.theme-toggle {
+    width: 38px;
+    height: 38px;
+
+    border: 1px solid #e5e4ed;
+
+    border-radius: 10px;
+
+    background: white;
+
+    color: #5146b8;
+
+    cursor: pointer;
+
+    font-size: 17px;
+}
+
+
+/* =====================================================
+   USER PROFILE
+   ===================================================== */
+
+.user-profile {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #5146b8;
+
+    color: white;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.user-profile div:last-child {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-profile strong {
+    color: #34344a;
+
+    font-size: 10px;
+}
+
+.user-profile span {
+    margin-top: 2px;
+
+    color: #8a899b;
+
+    font-size: 8px;
+}
+
+
+/* =====================================================
+   DARK MODE
+   ===================================================== */
+
+body.dark-mode {
+    background: #121326;
+    color: #eeeeee;
+}
+
+body.dark-mode .sidebar {
+    background: #191b35;
+    border-color: #303354;
+}
+
+body.dark-mode .logo-text span {
+    color: white;
+}
+
+body.dark-mode .logo-text small {
+    color: #aaa8c3;
+}
+
+body.dark-mode .nav-item {
+    color: #aaa9bd;
+}
+
+body.dark-mode .nav-item:hover,
+body.dark-mode .nav-item.active {
+    background: #29254e;
+    color: #b4aaff;
+}
+
+body.dark-mode .sidebar-bottom {
+    border-color: #303354;
+}
+
+body.dark-mode .topbar h1 {
+    color: white;
+}
+
+body.dark-mode .theme-toggle {
+    background: #191b35;
+    border-color: #303354;
+    color: #b4aaff;
+}
+
+
+/* =====================================================
+   RESPONSIVE SIDEBAR
+   ===================================================== */
+
+@media (max-width: 850px) {
+
+    .sidebar {
+        width: 75px;
+        padding: 20px 10px;
+    }
+
+    .sidebar-logo {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .logo-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .logo-text {
+        display: none;
+    }
+
+    .nav-item {
+        justify-content: center;
+        padding: 12px 5px;
+    }
+
+    .nav-item span:last-child {
+        display: none;
+    }
+
+    .nav-icon {
+        font-size: 17px;
+    }
+
+    .main-content {
+        margin-left: 75px;
+        padding: 25px;
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    .sidebar {
+        width: 62px;
+    }
+
+    .main-content {
+        margin-left: 62px;
+        padding: 18px;
+    }
+
+    .topbar-right .user-profile {
+        display: none;
+    }
+
+    .topbar h1 {
+        font-size: 23px;
     }
 }

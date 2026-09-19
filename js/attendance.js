@@ -1,1318 +1,575 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* =====================================================
+   BRADDYX — ATTENDANCE INTELLIGENCE
+   ===================================================== */
 
-    let attendanceData = [];
 
-    const analyzeBtn = document.getElementById("analyzeBtn");
+/* ================= DATA ================= */
 
+let attendanceData = [];
 
-    // =====================================================
-    // ANALYZE ERP REPORT
-    // =====================================================
+let attendanceTotals = {
+    total: 0,
+    present: 0,
+    absent: 0,
+    makeup: 0
+};
 
-    analyzeBtn.addEventListener("click", analyzeAttendance);
 
+/* ================= ELEMENTS ================= */
 
-    function analyzeAttendance() {
+const input = document.getElementById("attendanceInput");
+const analyzeBtn = document.getElementById("analyzeBtn");
+const clearBtn = document.getElementById("clearBtn");
 
-        const input =
-            document.getElementById("erpInput").value.trim();
+const tableBody = document.getElementById("attendanceTableBody");
 
-        const error =
-            document.getElementById("inputError");
+const overallPercentage = document.getElementById("overallPercentage");
+const circlePercentage = document.getElementById("circlePercentage");
+const overallProgress = document.getElementById("overallProgress");
 
+const totalClasses = document.getElementById("totalClasses");
+const totalPresent = document.getElementById("totalPresent");
+const totalAbsent = document.getElementById("totalAbsent");
 
-        if (!input) {
-            error.textContent =
-                "Please paste your ERP attendance report first.";
-            return;
-        }
+const overallMessage = document.getElementById("overallMessage");
+const errorMessage = document.getElementById("errorMessage");
 
+const attendInput = document.getElementById("attendClasses");
+const leaveInput = document.getElementById("leaveClasses");
+const makeupInput = document.getElementById("makeupClasses");
 
-        attendanceData = parseERP(input);
+const calculatePlanBtn =
+    document.getElementById("calculatePlanBtn");
 
+const projectedPercentage =
+    document.getElementById("projectedPercentage");
 
-        if (attendanceData.length === 0) {
+const projectedProgress =
+    document.getElementById("projectedProgress");
 
-            error.textContent =
-                "I couldn't detect attendance data. Try pasting the complete ERP attendance report.";
+const afterAttend =
+    document.getElementById("afterAttend");
 
-            return;
-        }
+const afterLeave =
+    document.getElementById("afterLeave");
 
+const afterMakeup =
+    document.getElementById("afterMakeup");
 
-        error.textContent = "";
+const planningAnalysis =
+    document.getElementById("planningAnalysis");
 
-        displayResults();
+const planningResult =
+    document.getElementById("planningResult");
 
-    }
 
+/* ================= PARSE ERP ================= */
 
+function parseAttendance(text) {
 
-    // =====================================================
-    // PARSE ERP DATA
-    // =====================================================
+    const lines = text
+        .split("\n")
+        .map(line => line.trim())
+        .filter(line => line.length > 0);
 
-    function parseERP(text) {
 
-        const lines =
-            text
-                .split(/\r?\n/)
-                .map(line => line.trim())
-                .filter(line => line.length > 0);
+    const subjects = [];
 
 
-        const data = [];
-
-
-        lines.forEach(line => {
-
-            // Ignore headings
-            if (
-                line.toLowerCase().startsWith("attendance report") ||
-                line.toLowerCase().includes("subject code")
-            ) {
-                return;
-            }
-
-
-            // Remove row number
-            line =
-                line.replace(/^\d+\s+/, "");
-
-
-            /*
-                Expected ERP format:
-
-                CODE
-                SUBJECT
-                TYPE
-                PRESENT
-                OD
-                MAKEUP
-                ABSENT
-                PERCENTAGE
-            */
-
-            const match =
-                line.match(
-                    /^(\S+)\s+(.+?)\s+(Lecture|Lab)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+(?:\.\d+)?)$/
-                );
-
-
-            if (!match) {
-                return;
-            }
-
-
-            data.push({
-
-                subjectCode: match[1],
-
-                subject: match[2],
-
-                subjectType: match[3],
-
-                present: Number(match[4]),
-
-                od: Number(match[5]),
-
-                makeup: Number(match[6]),
-
-                absent: Number(match[7]),
-
-                percentage: Number(match[8])
-
-            });
-
-        });
-
-
-        return data;
-
-    }
-
-
-
-    // =====================================================
-    // CALCULATE TOTALS
-    // =====================================================
-
-    function calculateTotals() {
-
-        let present = 0;
-        let od = 0;
-        let makeup = 0;
-        let absent = 0;
-
-
-        attendanceData.forEach(item => {
-
-            present += item.present;
-
-            od += item.od;
-
-            makeup += item.makeup;
-
-            absent += item.absent;
-
-        });
-
+    for (const line of lines) {
 
         /*
-         =====================================================
-         IMPORTANT ERP LOGIC
+            Expected ending:
 
-         Present = attended
-         OD      = attended
-         Makeup  = attended
+            Present OD Makeup Absent Percentage
 
-         BUT Makeup does NOT increase total classes.
+            Example:
 
-         Therefore:
-
-         Effective Present =
-         Present + OD + Makeup
-
-         Total Classes =
-         Present + OD + Absent
-         =====================================================
+            1 CSUL501 Design and Analysis...
+            Lecture 15 2 0 5 77.27
         */
 
-
-        const effectivePresent =
-            present + od + makeup;
-
-
-        const totalClasses =
-            present + od + absent;
+        const match = line.match(
+            /^(?:\d+\s+)?(\S+)\s+(.+?)\s+(Lecture|Lab)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+(?:\.\d+)?)$/
+        );
 
 
-        const overallPercentage =
-            totalClasses > 0
-                ? (effectivePresent / totalClasses) * 100
-                : 0;
+        if (!match) {
+            continue;
+        }
 
 
-        return {
+        const code = match[1];
 
+        const subject = match[2];
+
+        const type = match[3];
+
+        const present = Number(match[4]);
+
+        const od = Number(match[5]);
+
+        const makeup = Number(match[6]);
+
+        const absent = Number(match[7]);
+
+        const percentage = Number(match[8]);
+
+
+        subjects.push({
+            code,
+            subject,
+            type,
             present,
-
             od,
-
             makeup,
-
             absent,
+            percentage
+        });
+    }
 
-            effectivePresent,
 
-            totalClasses,
+    return subjects;
+}
 
-            overallPercentage
 
+/* ================= CALCULATE TOTALS ================= */
+
+function calculateTotals(data) {
+
+    let total = 0;
+
+    let present = 0;
+
+    let absent = 0;
+
+    let makeup = 0;
+
+
+    data.forEach(item => {
+
+        /*
+            IMPORTANT:
+
+            Makeup is included in Present,
+            but Makeup is NOT included in Total.
+
+            Therefore:
+
+            Total = Present + OD + Absent
+
+            Effective Present = Present + Makeup
+        */
+
+        total += item.present + item.od + item.absent;
+
+        present += item.present + item.makeup;
+
+        absent += item.absent;
+
+        makeup += item.makeup;
+    });
+
+
+    return {
+        total,
+        present,
+        absent,
+        makeup
+    };
+}
+
+
+/* ================= OVERALL PERCENTAGE ================= */
+
+function calculatePercentage(present, total) {
+
+    if (total === 0) {
+        return 0;
+    }
+
+    return (present / total) * 100;
+}
+
+
+/* ================= ANALYZE ================= */
+
+function analyzeAttendance() {
+
+    errorMessage.textContent = "";
+
+    const text = input.value.trim();
+
+
+    if (!text) {
+
+        errorMessage.textContent =
+            "Please paste your ERP attendance report first.";
+
+        return;
+    }
+
+
+    const data = parseAttendance(text);
+
+
+    if (data.length === 0) {
+
+        errorMessage.textContent =
+            "Couldn't detect attendance data. Please paste the complete ERP report.";
+
+        return;
+    }
+
+
+    attendanceData = data;
+
+    attendanceTotals = calculateTotals(data);
+
+
+    updateOverview();
+
+    updateTable();
+
+    calculatePlan();
+
+
+    planningResult.style.display = "block";
+}
+
+
+/* ================= UPDATE OVERVIEW ================= */
+
+function updateOverview() {
+
+    const total = attendanceTotals.total;
+
+    const present = attendanceTotals.present;
+
+    const absent = attendanceTotals.absent;
+
+
+    const percentage =
+        calculatePercentage(present, total);
+
+
+    const rounded =
+        percentage.toFixed(2);
+
+
+    overallPercentage.textContent =
+        `${rounded}%`;
+
+    circlePercentage.textContent =
+        `${Math.round(percentage)}%`;
+
+
+    totalClasses.textContent =
+        total;
+
+    totalPresent.textContent =
+        present;
+
+    totalAbsent.textContent =
+        absent;
+
+
+    overallProgress.style.width =
+        `${Math.min(percentage, 100)}%`;
+
+
+    if (percentage >= 75) {
+
+        overallMessage.textContent =
+            "Your overall attendance is currently above 75%.";
+
+    } else {
+
+        overallMessage.textContent =
+            "Your overall attendance is below 75%. Plan upcoming classes carefully.";
+    }
+}
+
+
+/* ================= TABLE ================= */
+
+function updateTable() {
+
+    tableBody.innerHTML = "";
+
+
+    attendanceData.forEach(item => {
+
+        const row =
+            document.createElement("tr");
+
+
+        let statusClass = "danger";
+
+        let statusText = "Low";
+
+
+        if (item.percentage >= 75) {
+
+            statusClass = "good";
+
+            statusText = "Good";
+
+        } else if (item.percentage >= 65) {
+
+            statusClass = "warning";
+
+            statusText = "Watch";
+        }
+
+
+        row.innerHTML = `
+
+            <td>
+                ${item.subject}
+                <br>
+                <small>${item.code}</small>
+            </td>
+
+            <td>${item.type}</td>
+
+            <td>${item.present}</td>
+
+            <td>${item.od}</td>
+
+            <td>${item.makeup}</td>
+
+            <td>${item.absent}</td>
+
+            <td>
+                <strong>
+                    ${item.percentage.toFixed(2)}%
+                </strong>
+            </td>
+
+            <td>
+                <span class="status ${statusClass}">
+                    ${statusText}
+                </span>
+            </td>
+        `;
+
+
+        tableBody.appendChild(row);
+    });
+}
+
+
+/* ================= PLAN CALCULATION ================= */
+
+function calculatePlan() {
+
+    if (attendanceData.length === 0) {
+
+        planningAnalysis.textContent =
+            "Analyze your attendance first.";
+
+        return;
+    }
+
+
+    const attend =
+        Math.max(0, Number(attendInput.value) || 0);
+
+    const leave =
+        Math.max(0, Number(leaveInput.value) || 0);
+
+    const makeup =
+        Math.max(0, Number(makeupInput.value) || 0);
+
+
+    const currentTotal =
+        attendanceTotals.total;
+
+    const currentPresent =
+        attendanceTotals.present;
+
+
+    /*
+        ATTEND:
+
+        New class is added to total
+        and present.
+    */
+
+    const attendPercentage =
+        calculatePercentage(
+            currentPresent + attend,
+            currentTotal + attend
+        );
+
+
+    /*
+        LEAVE:
+
+        New class is added to total
+        but not present.
+    */
+
+    const leavePercentage =
+        calculatePercentage(
+            currentPresent,
+            currentTotal + leave
+        );
+
+
+    /*
+        MAKEUP:
+
+        Makeup counts as present,
+        but does NOT increase total.
+    */
+
+    const makeupPercentage =
+        calculatePercentage(
+            currentPresent + makeup,
+            currentTotal
+        );
+
+
+    /*
+        FINAL COMBINED PLAN:
+
+        Attend → increases total + present
+
+        Leave → increases total only
+
+        Makeup → present only
+    */
+
+    const finalPresent =
+        currentPresent + attend + makeup;
+
+    const finalTotal =
+        currentTotal + attend + leave;
+
+
+    const finalPercentage =
+        calculatePercentage(
+            finalPresent,
+            finalTotal
+        );
+
+
+    afterAttend.textContent =
+        `${attendPercentage.toFixed(2)}%`;
+
+    afterLeave.textContent =
+        `${leavePercentage.toFixed(2)}%`;
+
+    afterMakeup.textContent =
+        `${makeupPercentage.toFixed(2)}%`;
+
+
+    projectedPercentage.textContent =
+        `${finalPercentage.toFixed(2)}%`;
+
+
+    projectedProgress.style.width =
+        `${Math.min(finalPercentage, 100)}%`;
+
+
+    if (finalPercentage >= 75) {
+
+        planningAnalysis.textContent =
+            `With ${attend} class(es) attended, ${leave} left and ${makeup} makeup class(es), your projected attendance is ${finalPercentage.toFixed(2)}%, which is above 75%.`;
+
+    } else {
+
+        planningAnalysis.textContent =
+            `With ${attend} class(es) attended, ${leave} left and ${makeup} makeup class(es), your projected attendance is ${finalPercentage.toFixed(2)}%. You would still be below 75%.`;
+    }
+}
+
+
+/* ================= BUTTONS ================= */
+
+analyzeBtn.addEventListener(
+    "click",
+    analyzeAttendance
+);
+
+
+calculatePlanBtn.addEventListener(
+    "click",
+    calculatePlan
+);
+
+
+clearBtn.addEventListener(
+    "click",
+    () => {
+
+        input.value = "";
+
+        attendanceData = [];
+
+        attendanceTotals = {
+            total: 0,
+            present: 0,
+            absent: 0,
+            makeup: 0
         };
 
-    }
 
+        overallPercentage.textContent = "—";
 
+        circlePercentage.textContent = "—";
 
-    // =====================================================
-    // DISPLAY ALL RESULTS
-    // =====================================================
+        totalClasses.textContent = "—";
 
-    function displayResults() {
+        totalPresent.textContent = "—";
 
-        const results =
-            document.getElementById("results");
+        totalAbsent.textContent = "—";
 
+        overallProgress.style.width = "0%";
 
-        if (results) {
-            results.classList.remove("hidden");
-        }
+        projectedProgress.style.width = "0%";
 
-
-        const totals =
-            calculateTotals();
-
-
-        // Overall percentage
-
-        const overallPercent =
-            document.getElementById(
-                "overallPercent"
-            );
-
-
-        if (overallPercent) {
-
-            overallPercent.textContent =
-                totals.overallPercentage.toFixed(2) + "%";
-
-        }
-
-
-        // Present
-
-        const totalPresent =
-            document.getElementById(
-                "totalPresent"
-            );
-
-
-        if (totalPresent) {
-
-            totalPresent.textContent =
-                totals.effectivePresent;
-
-        }
-
-
-        // Absent
-
-        const totalAbsent =
-            document.getElementById(
-                "totalAbsent"
-            );
-
-
-        if (totalAbsent) {
-
-            totalAbsent.textContent =
-                totals.absent;
-
-        }
-
-
-        // Risk subjects
-
-        const riskSubjects =
-            attendanceData.filter(
-                item => item.percentage < 75
-            ).length;
-
-
-        const riskElement =
-            document.getElementById(
-                "riskSubjects"
-            );
-
-
-        if (riskElement) {
-
-            riskElement.textContent =
-                riskSubjects;
-
-        }
-
-
-        displayAnalysis();
-
-        displayTable();
-
-        displayRecovery();
-
-        populateSubjects();
-
-    }
-
-
-
-    // =====================================================
-    // OVERALL ANALYSIS
-    // =====================================================
-
-    function displayAnalysis() {
-
-        const totals =
-            calculateTotals();
-
-
-        const overall =
-            totals.overallPercentage;
-
-
-        const risky =
-            attendanceData.filter(
-                item => item.percentage < 75
-            );
-
-
-        const title =
-            document.getElementById(
-                "analysisTitle"
-            );
-
-
-        const text =
-            document.getElementById(
-                "analysisText"
-            );
-
-
-        if (!title || !text) {
-            return;
-        }
-
-
-        if (overall >= 85) {
-
-            title.textContent =
-                "Your overall attendance is strong.";
-
-
-            text.textContent =
-                `You're currently at ${overall.toFixed(2)}%. You have a comfortable buffer above the 75% requirement.`;
-
-        }
-
-        else if (overall >= 75) {
-
-            title.textContent =
-                "You're above the 75% target.";
-
-
-            text.textContent =
-                `Your overall attendance is ${overall.toFixed(2)}%. However, ${risky.length} subject(s) are below 75%, so check the subject-wise breakdown carefully.`;
-
-        }
-
-        else {
-
-            title.textContent =
-                "Your attendance needs attention.";
-
-
-            text.textContent =
-                `Your overall attendance is ${overall.toFixed(2)}%. ${risky.length} subject(s) are below the 75% target.`;
-
-        }
-
-    }
-
-
-
-    // =====================================================
-    // SUBJECT TABLE
-    // =====================================================
-
-    function displayTable() {
-
-        const table =
-            document.getElementById(
-                "attendanceTable"
-            );
-
-
-        if (!table) {
-            return;
-        }
-
-
-        table.innerHTML = "";
-
-
-        attendanceData.forEach(item => {
-
-            let status;
-            let statusClass;
-
-
-            if (item.percentage >= 75) {
-
-                status = "Safe";
-                statusClass = "safe";
-
-            }
-
-            else if (item.percentage >= 70) {
-
-                status = "Near Target";
-                statusClass = "warning";
-
-            }
-
-            else {
-
-                status = "Low";
-                statusClass = "danger";
-
-            }
-
-
-            const row =
-                document.createElement("tr");
-
-
-            row.innerHTML = `
-
-                <td>
-
-                    <div class="subject-name">
-                        ${escapeHTML(item.subject)}
-                    </div>
-
-                    <small>
-                        ${escapeHTML(item.subjectCode)}
-                    </small>
-
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="8" class="empty-row">
+                    Analyze your ERP report to see subjects here.
                 </td>
+            </tr>
+        `;
 
+        overallMessage.textContent =
+            "Paste your ERP attendance report below to analyze it.";
 
-                <td>
-                    ${item.present + item.od + item.makeup}
-                </td>
+        errorMessage.textContent = "";
 
+        projectedPercentage.textContent = "—";
 
-                <td>
-                    ${item.absent}
-                </td>
+        afterAttend.textContent = "—";
 
+        afterLeave.textContent = "—";
 
-                <td>
-                    ${item.present + item.od + item.absent}
-                </td>
+        afterMakeup.textContent = "—";
 
-
-                <td>
-
-                    <div class="attendance-value">
-                        ${item.percentage.toFixed(2)}%
-                    </div>
-
-                    <div class="mini-bar">
-
-                        <div
-                            style="width:${Math.min(item.percentage, 100)}%">
-                        </div>
-
-                    </div>
-
-                </td>
-
-
-                <td>
-
-                    <span class="badge ${statusClass}">
-                        ${status}
-                    </span>
-
-                </td>
-
-            `;
-
-
-            table.appendChild(row);
-
-        });
-
+        planningAnalysis.textContent =
+            "Analyze your attendance first.";
     }
+);
 
 
+/* ================= DARK MODE ================= */
 
-    // =====================================================
-    // RECOVERY CALCULATION
-    // =====================================================
+const themeToggle =
+    document.getElementById("themeToggle");
 
-    function displayRecovery() {
 
-        const container =
-            document.getElementById(
-                "recoveryContainer"
-            );
+themeToggle.addEventListener(
+    "click",
+    () => {
 
-
-        if (!container) {
-            return;
-        }
-
-
-        container.innerHTML = "";
-
-
-        attendanceData.forEach(item => {
-
-            if (item.percentage >= 75) {
-
-                const row =
-                    document.createElement("div");
-
-                row.className =
-                    "recovery-row";
-
-
-                row.innerHTML = `
-
-                    <div>
-
-                        <div class="recovery-subject">
-                            ${escapeHTML(item.subject)}
-                        </div>
-
-                        <div class="recovery-info">
-                            ${item.percentage.toFixed(2)}% — target achieved.
-                        </div>
-
-                    </div>
-
-                    <div class="recovery-number">
-                        ✓
-                    </div>
-
-                `;
-
-
-                container.appendChild(row);
-
-                return;
-
-            }
-
-
-            /*
-             * Current attended includes:
-             *
-             * Present + OD + Makeup
-             *
-             * BUT makeup is already inside the
-             * effective present count and doesn't
-             * increase total.
-             */
-
-
-            const effectivePresent =
-                item.present +
-                item.od +
-                item.makeup;
-
-
-            const total =
-                item.present +
-                item.od +
-                item.absent;
-
-
-            const needed =
-                classesNeededFor75(
-                    effectivePresent,
-                    total
-                );
-
-
-            const row =
-                document.createElement("div");
-
-
-            row.className =
-                "recovery-row";
-
-
-            row.innerHTML = `
-
-                <div>
-
-                    <div class="recovery-subject">
-                        ${escapeHTML(item.subject)}
-                    </div>
-
-                    <div class="recovery-info">
-                        Current: ${item.percentage.toFixed(2)}%
-                    </div>
-
-                </div>
-
-
-                <div class="recovery-number">
-
-                    ${needed}
-
-                    <small>
-                        classes
-                    </small>
-
-                </div>
-
-            `;
-
-
-            container.appendChild(row);
-
-        });
-
-    }
-
-
-
-    // =====================================================
-    // CLASSES NEEDED TO REACH 75%
-    // =====================================================
-
-    function classesNeededFor75(
-        present,
-        total
-    ) {
-
-        if (
-            total > 0 &&
-            present / total >= 0.75
-        ) {
-
-            return 0;
-
-        }
-
-
-        let required = 0;
-
-
-        while (
-            (present + required) /
-            (total + required)
-            < 0.75
-        ) {
-
-            required++;
-
-        }
-
-
-        return required;
-
-    }
-
-
-
-    // =====================================================
-    // POPULATE SUBJECT DROPDOWN
-    // =====================================================
-
-    function populateSubjects() {
-
-        const select =
-            document.getElementById(
-                "subjectSelect"
-            );
-
-
-        if (!select) {
-            return;
-        }
-
-
-        select.innerHTML =
-            '<option value="">Select a subject</option>';
-
-
-        attendanceData.forEach(
-            (item, index) => {
-
-                const option =
-                    document.createElement(
-                        "option"
-                    );
-
-
-                option.value =
-                    index;
-
-
-                option.textContent =
-                    `${item.subjectCode} — ${item.subject}`;
-
-
-                select.appendChild(option);
-
-            }
+        document.body.classList.toggle(
+            "dark-mode"
         );
-
     }
-
-
-
-    // =====================================================
-    // SUBJECT SELECTION
-    // =====================================================
-
-    const subjectSelect =
-        document.getElementById(
-            "subjectSelect"
-        );
-
-
-    if (subjectSelect) {
-
-        subjectSelect.addEventListener(
-            "change",
-            () => {
-
-                const current =
-                    document.getElementById(
-                        "subjectCurrent"
-                    );
-
-
-                if (
-                    subjectSelect.value === ""
-                ) {
-
-                    if (current) {
-                        current.classList.add("hidden");
-                    }
-
-                    return;
-
-                }
-
-
-                const index =
-                    Number(
-                        subjectSelect.value
-                    );
-
-
-                const item =
-                    attendanceData[index];
-
-
-                if (!item) {
-                    return;
-                }
-
-
-                if (current) {
-                    current.classList.remove("hidden");
-                }
-
-
-                document.getElementById(
-                    "subjectCurrentPercent"
-                ).textContent =
-                    item.percentage.toFixed(2) + "%";
-
-
-                document.getElementById(
-                    "subjectPresent"
-                ).textContent =
-                    item.present +
-                    item.od +
-                    item.makeup;
-
-
-                document.getElementById(
-                    "subjectAbsent"
-                ).textContent =
-                    item.absent;
-
-            }
-        );
-
-    }
-
-
-
-    // =====================================================
-    // SUBJECT-WISE PLANNER
-    // =====================================================
-
-    const subjectPlanBtn =
-        document.getElementById(
-            "subjectPlanBtn"
-        );
-
-
-    if (subjectPlanBtn) {
-
-        subjectPlanBtn.addEventListener(
-            "click",
-            analyzeSubjectPlan
-        );
-
-    }
-
-
-    function analyzeSubjectPlan() {
-
-        const index =
-            Number(
-                document.getElementById(
-                    "subjectSelect"
-                ).value
-            );
-
-
-        if (
-            !attendanceData[index]
-        ) {
-
-            alert(
-                "Please select a subject first."
-            );
-
-            return;
-
-        }
-
-
-        const item =
-            attendanceData[index];
-
-
-        const attend =
-            getNumber(
-                "subjectAttend"
-            );
-
-
-        const leave =
-            getNumber(
-                "subjectLeave"
-            );
-
-
-        const makeup =
-            getNumber(
-                "subjectMakeup"
-            );
-
-
-        /*
-         * Attend:
-         * +1 effective present
-         * +1 total
-         *
-         * Leave:
-         * +0 present
-         * +1 total
-         *
-         * Makeup:
-         * +1 effective present
-         * +0 total
-         */
-
-
-        const currentPresent =
-            item.present +
-            item.od +
-            item.makeup;
-
-
-        const currentTotal =
-            item.present +
-            item.od +
-            item.absent;
-
-
-        const projectedPresent =
-            currentPresent +
-            attend +
-            makeup;
-
-
-        const projectedTotal =
-            currentTotal +
-            attend +
-            leave;
-
-
-        const percentage =
-            projectedTotal > 0
-                ? (projectedPresent /
-                    projectedTotal) * 100
-                : 0;
-
-
-        showSubjectPlanResult(
-            projectedPresent,
-            projectedTotal,
-            percentage
-        );
-
-    }
-
-
-
-    // =====================================================
-    // SUBJECT PLAN RESULT
-    // =====================================================
-
-    function showSubjectPlanResult(
-        present,
-        total,
-        percentage
-    ) {
-
-        const result =
-            document.getElementById(
-                "subjectPlanResult"
-            );
-
-
-        if (result) {
-            result.classList.remove("hidden");
-        }
-
-
-        document.getElementById(
-            "subjectProjectedPercent"
-        ).textContent =
-            percentage.toFixed(2) + "%";
-
-
-        const status =
-            document.getElementById(
-                "subjectStatus"
-            );
-
-
-        const message =
-            document.getElementById(
-                "subjectPlanMessage"
-            );
-
-
-        if (percentage >= 75) {
-
-            status.textContent =
-                "✓ SAFE";
-
-
-            status.className =
-                "plan-status safe";
-
-
-            message.textContent =
-                `This plan gives you ${percentage.toFixed(2)}% attendance for this subject, keeping you above the 75% target.`;
-
-        }
-
-        else {
-
-            status.textContent =
-                "⚠ BELOW 75%";
-
-
-            status.className =
-                "plan-status danger";
-
-
-            const needed =
-                classesNeededFor75(
-                    present,
-                    total
-                );
-
-
-            message.textContent =
-                `This plan brings your attendance to ${percentage.toFixed(2)}%. You need ${needed} additional attended class${needed === 1 ? "" : "es"} to reach 75%.`;
-
-        }
-
-    }
-
-
-
-    // =====================================================
-    // COMBINED OVERALL PLANNER
-    // =====================================================
-
-    const calculatePlanBtn =
-        document.getElementById(
-            "calculatePlanBtn"
-        );
-
-
-    if (calculatePlanBtn) {
-
-        calculatePlanBtn.addEventListener(
-            "click",
-            calculateCombinedPlan
-        );
-
-    }
-
-
-
-    function calculateCombinedPlan() {
-
-        const attend =
-            getNumber(
-                "planAttend"
-            );
-
-
-        const leave =
-            getNumber(
-                "planLeave"
-            );
-
-
-        const makeup =
-            getNumber(
-                "planMakeup"
-            );
-
-
-        const totals =
-            calculateTotals();
-
-
-        /*
-         * Attend:
-         * +1 present
-         * +1 total
-         *
-         * Leave:
-         * +1 total
-         *
-         * Makeup:
-         * +1 present
-         * +0 total
-         */
-
-
-        const projectedPresent =
-            totals.effectivePresent +
-            attend +
-            makeup;
-
-
-        const projectedAbsent =
-            totals.absent +
-            leave;
-
-
-        const projectedTotal =
-            totals.totalClasses +
-            attend +
-            leave;
-
-
-        const projectedPercentage =
-            projectedTotal > 0
-                ? (projectedPresent /
-                    projectedTotal) * 100
-                : 0;
-
-
-        displayPlanResult({
-
-            projectedPresent,
-
-            projectedAbsent,
-
-            projectedTotal,
-
-            makeup,
-
-            percentage:
-                projectedPercentage
-
-        });
-
-    }
-
-
-
-    // =====================================================
-    // OVERALL PLAN RESULT
-    // =====================================================
-
-    function displayPlanResult(result) {
-
-        const container =
-            document.getElementById(
-                "planResult"
-            );
-
-
-        if (container) {
-            container.classList.remove("hidden");
-        }
-
-
-        document.getElementById(
-            "projectedPercent"
-        ).textContent =
-            result.percentage.toFixed(2) + "%";
-
-
-        document.getElementById(
-            "projectedPresent"
-        ).textContent =
-            result.projectedPresent;
-
-
-        document.getElementById(
-            "projectedAbsent"
-        ).textContent =
-            result.projectedAbsent;
-
-
-        document.getElementById(
-            "projectedTotal"
-        ).textContent =
-            result.projectedTotal;
-
-
-        document.getElementById(
-            "projectedMakeup"
-        ).textContent =
-            result.makeup;
-
-
-        const status =
-            document.getElementById(
-                "planStatus"
-            );
-
-
-        const message =
-            document.getElementById(
-                "planMessage"
-            );
-
-
-        const recommendation =
-            document.getElementById(
-                "bestPlanText"
-            );
-
-
-        if (result.percentage >= 75) {
-
-            status.textContent =
-                "✓ SAFE — ABOVE 75%";
-
-
-            status.className =
-                "plan-status safe";
-
-
-            message.textContent =
-                `Your planned schedule gives you ${result.percentage.toFixed(2)}% attendance.`;
-
-
-            recommendation.textContent =
-                "This plan keeps you above the 75% target. You can use the planner to adjust your attendance, leave and makeup numbers before making your decision.";
-
-        }
-
-        else {
-
-            status.textContent =
-                "⚠ BELOW 75%";
-
-
-            status.className =
-                "plan-status danger";
-
-
-            const needed =
-                classesNeededFor75(
-                    result.projectedPresent,
-                    result.projectedTotal
-                );
-
-
-            message.textContent =
-                `Your plan would bring attendance down to ${result.percentage.toFixed(2)}%.`;
-
-
-            recommendation.textContent =
-                `You would need ${needed} additional attended class${needed === 1 ? "" : "es"} after this plan to reach 75%.`;
-
-        }
-
-    }
-
-
-
-    // =====================================================
-    // GET NUMBER SAFELY
-    // =====================================================
-
-    function getNumber(id) {
-
-        const element =
-            document.getElementById(id);
-
-
-        if (!element) {
-            return 0;
-        }
-
-
-        const value =
-            Number(element.value);
-
-
-        if (
-            !Number.isFinite(value) ||
-            value < 0
-        ) {
-
-            return 0;
-
-        }
-
-
-        return Math.floor(value);
-
-    }
-
-
-
-    // =====================================================
-    // DARK / LIGHT MODE
-    // =====================================================
-
-    const themeToggle =
-        document.getElementById(
-            "themeToggle"
-        );
-
-
-    if (themeToggle) {
-
-        themeToggle.addEventListener(
-            "click",
-            () => {
-
-                document.body.classList.toggle(
-                    "dark-mode"
-                );
-
-
-                themeToggle.textContent =
-                    document.body.classList.contains(
-                        "dark-mode"
-                    )
-                        ? "☾"
-                        : "☀";
-
-            }
-        );
-
-    }
-
-
-
-    // =====================================================
-    // ESCAPE HTML
-    // =====================================================
-
-    function escapeHTML(text) {
-
-        const div =
-            document.createElement(
-                "div"
-            );
-
-
-        div.textContent =
-            text;
-
-
-        return div.innerHTML;
-
-    }
-
-});
+);

@@ -8,19 +8,21 @@
 #   Java    install: ./mvnw -B dependency:go-offline
 #                                    test: ./mvnw test     build: ./mvnw package
 
+
 .PHONY: install test build run docker-build docker-up
 
 install:
-	@echo "TODO: install dependencies" && exit 1
+	cd frontend && npm ci
+	cd backend && npm ci
 
 test:
-	@echo "TODO: run the test suite" && exit 1
+	node tests/attendance.test.js
 
 build:
-	@echo "TODO: build the project" && exit 1
+	cd frontend && npm run build
 
 run:
-	@echo "TODO: start the app locally" && exit 1
+	@echo "Run frontend and backend separately"
 
 # Needed from M4 onwards
 docker-build:

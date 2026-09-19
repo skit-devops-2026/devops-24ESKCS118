@@ -74,3 +74,40 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
 //
 // These will be added in separate JS files
 // as the project grows.
+
+/* =====================================================
+   BRADDYX — COMMON JAVASCRIPT
+   ===================================================== */
+
+
+/* ================= DARK MODE ================= */
+
+const themeToggle = document.getElementById("themeToggle");
+
+if (themeToggle) {
+
+    themeToggle.addEventListener("click", function () {
+
+        document.body.classList.toggle("dark-mode");
+
+        const darkMode =
+            document.body.classList.contains("dark-mode");
+
+        localStorage.setItem(
+            "braddyx-theme",
+            darkMode ? "dark" : "light"
+        );
+
+    });
+
+}
+
+
+/* ================= LOAD SAVED THEME ================= */
+
+const savedTheme =
+    localStorage.getItem("braddyx-theme");
+
+if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+}
