@@ -5,13 +5,16 @@
 
 ## Author
 
-| Roll No. | Name | GitHub username |
-|---|---|---|
+|  Roll No.  |       Name       | GitHub username |
+|    ---     |       ---        |      ---        |
 | 24ESKCS118 | Divyanshi Tailor | divyanshitailor |
 
 ## About
 
+BraddyX - DevOps CI/CD project
+
 BraddyX is an intelligent academic and placement companion that brings attendance, subjects, DSA, core CS, skills, projects, resume, and placement preparation together in one platform. It analyzes a student's progress and creates a personalized, adaptive roadmap with recommendations on what to study and do next.
+
 
 ## Tech stack
 
