@@ -70,6 +70,7 @@ app.get('/metrics', async (req, res) => {
     res.end(await register.metrics());
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, () =
+> {
     console.log(`Backend running on port ${PORT}`);
 });
