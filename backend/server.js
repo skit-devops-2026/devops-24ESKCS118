@@ -61,6 +61,15 @@ app.get("/metrics", async (req, res) => {
 // Start server
 const PORT = process.env.PORT || 5000;
 
+const register = new client.Registry();
+
+client.collectDefaultMetrics({ register });
+
+app.get('/metrics', async (req, res) => {
+    res.set('Content-Type', register.contentType);
+    res.end(await register.metrics());
+});
+
 app.listen(PORT, () => {
     console.log(`Backend running on port ${PORT}`);
 });
